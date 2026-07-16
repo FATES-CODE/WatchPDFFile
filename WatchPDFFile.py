@@ -12,18 +12,11 @@ import io
 WATCH_DIR = r"C:\Users\FATES\Desktop\SCAN"
 POPPLER_PATH = r"C:\poppler\Library\bin"
 
-# ==========================================================
-# [중요] ADC(Application Default Credentials) 방식을 사용합니다.
-# 소스코드에 하드코딩된 특정 PC의 JSON 키 파일 경로를 완전히 제거하였습니다.
-# 다른 컴퓨터에서도 실행 전에 터미널에 아래 명령어를 실행해 로그인해 두면 
-# 코드 수정 없이 구글 클라우드가 자동으로 사용자 세션을 찾아 인증합니다:
-# => gcloud auth application-default login
-# ==========================================================
 client_vision = vision.ImageAnnotatorClient()
 
 processed_files = {}
 ignore_files = set()
-processed_hashes = {} # file_hash -> detected_bl 캐싱
+processed_hashes = {}
 
 BL_CORRECTION_DICTIONARY = [
     ["TIMBHLJ", "TIMBHIJ"],  
