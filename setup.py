@@ -13,7 +13,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'run-watcher=WatchPDFFile:main'  # 사용자가 run-watcher라고 치면 WatchPDFFile.py의 main() 함수를 실행하라는 뜻입니다.
+            'run-watcher=WatchPDFFile:main'
         ]
     }
 )

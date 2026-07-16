@@ -9,11 +9,11 @@ from google.cloud import vision
 import ollama
 import io
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = r"C:\Users\FATES\Desktop\folder\cloud-visionAPI.json"
-
 WATCH_DIR = r"C:\Users\FATES\Desktop\SCAN"
 POPPLER_PATH = r"C:\poppler\Library\bin"
 
+# ADC(Application Default Credentials) 방식을 사용하므로 
+# 소스코드 내에 JSON 키 파일의 경로나 환경 변수 설정을 일절 기입하지 않습니다.
 client_vision = vision.ImageAnnotatorClient()
 processed_files = {}
 ignore_files = set()
@@ -41,7 +41,6 @@ def calculate_file_hash(file_path):
         return None
 
 def fix_bl_o_and_zero(text):
-    # 하이픈(-)을 보존하도록 정규식 수정
     clean_text = re.sub(r"[^A-Z0-9\-]", "", text.upper())
     clean_text = clean_text.replace("REF", "")
     
@@ -144,7 +143,6 @@ def extract_text_near_anchor_by_lines(response):
 
 def extract_bl_by_regex(text):
     text_upper = text.upper()
-    # 하이픈(-) 매칭 추가 및 최소 접두사 길이 2로 수정 (예: TPL-12763 매칭)
     match = re.search(r"\b([A-Z]{2,8}[\s\-/]*[0-9]{4,12}[A-Z0-9\-]*)\b", text_upper)
     if match:
         val = re.sub(r"\s", "", match.group(1))
@@ -273,7 +271,6 @@ SAME AS CONSIGNEE
         
         cleaned_words = []
         for w in words:
-            # 하이픈(-)을 제거하지 않도록 정규식 수정
             w_clean = re.sub(r"^[^A-Z0-9\-]+|[^A-Z0-9\-]+$", "", w.upper())
             if w_clean and w_clean not in ignore_words and len(w_clean) >= 4:
                 cleaned_words.append(w_clean)
@@ -378,7 +375,6 @@ def process_pdf(file_path):
             return
 
         log(f"PDF: {file_name}")
-        
         time.sleep(8) 
 
         try: 
@@ -434,7 +430,7 @@ def process_pdf(file_path):
                     if os.path.exists(file_path):
                         with open(file_path, "wb") as f:
                             f.truncate(0)
-                        time.sleep(1)
+                        time.sleep(1) 
                         os.remove(file_path)
                 except Exception as delete_error:
                     log(f"Failed to delete duplicate source: {str(delete_error)}", "WARNING")
