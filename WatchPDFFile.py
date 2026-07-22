@@ -9,7 +9,7 @@ from google.cloud import vision
 import ollama
 import io
 
-WATCH_DIR = r"C:\Users\user\Desktop\SCAN"
+WATCH_DIR = r"C:\Users\FATES\Desktop\SCAN"
 POPPLER_PATH = r"C:\poppler\Library\bin"
 gcloud_config_path = os.path.join(os.environ.get('APPDATA', ''), 'gcloud', 'application_default_credentials.json')
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcloud_config_path
