@@ -9,7 +9,7 @@ from google.cloud import vision
 import ollama
 import io
 
-WATCH_DIR = r"C:\Users\FATES\Desktop\SCAN"
+WATCH_DIR = r"C:\Users\user\Desktop\SCAN"
 POPPLER_PATH = r"C:\poppler\Library\bin"
 
 client_vision = vision.ImageAnnotatorClient()
