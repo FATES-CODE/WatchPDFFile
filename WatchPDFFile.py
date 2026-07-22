@@ -11,8 +11,8 @@ import io
 
 WATCH_DIR = r"C:\Users\user\Desktop\SCAN"
 POPPLER_PATH = r"C:\poppler\Library\bin"
-
-client_vision = vision.ImageAnnotatorClient()
+gcloud_config_path = os.path.join(os.environ.get('APPDATA', ''), 'gcloud', 'application_default_credentials.json')
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcloud_config_path
 
 processed_files = {}
 ignore_files = set()
@@ -359,17 +359,14 @@ def process_pdf(file_path):
     if file_name in ignore_files:
         return
 
-    # 1. 파일의 SHA256 해시 계산
     file_hash = calculate_file_hash(file_path)
     if not file_hash:
         return
 
-    # 2. 이미 처리된 내용(해시 캐시)이 있는지 확인
     if file_hash in processed_hashes:
         detected_bl = processed_hashes[file_hash]
         log(f"File {file_name} already processed (Cache hit). BL: {detected_bl}")
     else:
-        # 감지 쿨다운 검사 (일시적인 중복 감지 방어)
         current_time = time.time()
         if file_name in processed_files:
             if current_time - processed_files[file_name] < 5:
@@ -382,7 +379,6 @@ def process_pdf(file_path):
 
         log(f"PDF: {file_name}")
         
-        # [원드라이브 방어] 대기 시간을 8초로 지정
         time.sleep(8) 
 
         try: 
